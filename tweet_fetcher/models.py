@@ -13,6 +13,9 @@ class Search(models.Model):
     token_key = models.CharField(max_length=255)
     token_secret = models.CharField(max_length=255)
     
+    def __unicode__(self):
+        return self.q
+    
 class User(models.Model):
     twitter_id = models.BigIntegerField(unique=True, db_index=True)
     image = models.FileField(upload_to="twitter/%Y/%m", null=True)
@@ -21,6 +24,9 @@ class User(models.Model):
     name = models.CharField(max_length=255)
     screen_name = models.CharField(max_length=255)
     language = models.CharField(max_length=2, null=True)
+    
+    def __unicode__(self):
+        return u"%s - %s (%s)" (self.pk, self.name, self.twitter_id)
     
     def set_image(self, url):
         
@@ -51,6 +57,8 @@ class Tweet(models.Model):
     data = models.TextField(help_text='Raw tweet data for future')
     language = models.CharField(max_length=2)
     
+    def __unicode__(self):
+        return u"%s - %s... (%s, %s)" (self.pk, self.message[:30], self.twitter_id, self.search)
 
 class Retweet(models.Model):
     user = models.ForeignKey(User, related_name="tweet_retweet")
