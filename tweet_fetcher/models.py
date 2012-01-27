@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 class Search(models.Model):
     q = models.CharField(max_length=255)    
     active = models.BooleanField(default=True)
-    max_id = models.BigIntegerField(null=True)
+    max_id = models.BigIntegerField(null=True, blank=True)
     
     token_key = models.CharField(max_length=255)
     token_secret = models.CharField(max_length=255)
