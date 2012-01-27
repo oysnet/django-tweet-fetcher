@@ -26,7 +26,7 @@ class User(models.Model):
     language = models.CharField(max_length=2, null=True)
     
     def __unicode__(self):
-        return u"%s - %s (%s)" (self.pk, self.name, self.twitter_id)
+        return u"%s - %s (%s)" % (self.pk, self.name, self.twitter_id)
     
     def set_image(self, url):
         
@@ -58,7 +58,7 @@ class Tweet(models.Model):
     language = models.CharField(max_length=2)
     
     def __unicode__(self):
-        return u"%s - %s... (%s, %s)" (self.pk, self.message[:30], self.twitter_id, self.search)
+        return u"%s - %s... (%s, %s)" % (self.pk, self.message[:30], self.twitter_id, u', '.join([unicode(s) for s in self.search.all()])
 
 class Retweet(models.Model):
     user = models.ForeignKey(User, related_name="tweet_retweet")
