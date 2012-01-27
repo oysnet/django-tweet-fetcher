@@ -12,7 +12,6 @@ CLASSIFIERS = [
 
 KEYWORDS = 'django twitter tweet fetcher'
 
-
 setup(name = 'tweet_fetcher',
     version = tweet_fetcher.__version__,
     description = """fetch tweets""",
