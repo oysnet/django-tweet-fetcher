@@ -58,7 +58,7 @@ class Tweet(models.Model):
     language = models.CharField(max_length=2)
     
     def __unicode__(self):
-        return u"%s - %s... (%s, %s)" % (self.pk, self.message[:30], self.twitter_id, u', '.join([unicode(s) for s in self.search.all()])
+        return u"%s - %s... (%s, %s)" % (self.pk, self.message[:30], self.twitter_id, u', '.join([unicode(s) for s in self.search.all()]))
 
 class Retweet(models.Model):
     user = models.ForeignKey(User, related_name="tweet_retweet")
