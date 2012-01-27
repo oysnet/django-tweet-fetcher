@@ -22,7 +22,6 @@ You will need to include ``tweet_fetcher`` in your ``INSTALLED_APPS``::
 
 Configure oauth access in settings.py
 	
-	...
-	
-	TWITTER_CONSUMER_KEY = "..."
-	TWITTER_CONSUMER_SECRET = "..." 
+  ...	
+  TWITTER_CONSUMER_KEY = "..."
+  TWITTER_CONSUMER_SECRET = "..." 
