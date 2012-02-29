@@ -56,5 +56,6 @@ def get_retweet(twitter_id, token_key, token_secret):
     
     if int(resp.status) == 400 and int(resp['x-ratelimit-remaining']) == 0:
         raise RateLimitError()
-        
+    elif int(resp.status) != 200:
+        return []
     return simplejson.loads(content.decode('utf-8'))
