@@ -33,13 +33,16 @@ class User(models.Model):
         if self.image_url == url:
             return
         
-        input_file = StringIO(urllib2.urlopen(url).read())
-        output_file = StringIO()
-        img = Image.open(input_file)
-        if img.mode != "RGB":
-            img = img.convert("RGB")
-        img.save(output_file, "PNG")
-        self.image.save(str(uuid.uuid4()) + ".png", ContentFile(output_file.getvalue()), save=False)
+        try:
+            input_file = StringIO(urllib2.urlopen(url).read())
+            output_file = StringIO()
+            img = Image.open(input_file)
+            if img.mode != "RGB":
+                img = img.convert("RGB")
+            img.save(output_file, "PNG")
+            self.image.save(str(uuid.uuid4()) + ".png", ContentFile(output_file.getvalue()), save=False)
+        except:
+            pass
         self.image_url = url
 
 class Tweet(models.Model):
