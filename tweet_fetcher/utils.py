@@ -3,6 +3,7 @@ from httplib2 import Http
 from django.utils import simplejson
 import oauth2 as oauth
 from django.conf import settings
+from simplejson.decoder import JSONDecodeError
 
 class RateLimitError(Exception):
     pass
@@ -58,4 +59,7 @@ def get_retweet(twitter_id, token_key, token_secret):
         raise RateLimitError()
     elif int(resp.status) != 200:
         return []
-    return simplejson.loads(content.decode('utf-8'))
+    try:
+        return simplejson.loads(content.decode('utf-8'))
+    except JSONDecodeError:
+        return []
