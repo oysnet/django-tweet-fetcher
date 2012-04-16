@@ -1,5 +1,5 @@
 from celery.task.base import PeriodicTask
-from celery.task.schedules import crontab
+from celery.schedules import crontab
 from django.core import management
 
 
