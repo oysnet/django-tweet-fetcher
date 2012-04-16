@@ -94,5 +94,7 @@ class Command(BaseCommand):
         except:
             transaction.rollback()
             raise
+        
+        transaction.commit()
                 
         
