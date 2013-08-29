@@ -27,9 +27,7 @@ class Command(BaseCommand):
         if tweets.count() < 350:
             tweets = list(tweets) + list(Tweet.objects.filter(Q(date__gte=datetime.now() - timedelta(days=7)) & 
                                                          (Q(last_retweet=None) | Q(last_retweet__lte=datetime.now() - timedelta(days=1)))).filter(search=s).order_by('-date')[:350-tweets.count()])
-        
         for tweet in tweets:
-            
             tweet.last_retweet = datetime.now()
             
             for res in get_retweet(tweet.twitter_id,  token_key=s.token_key, token_secret=s.token_secret):
@@ -64,11 +62,10 @@ class Command(BaseCommand):
         # todo since_id ou stocker max_id dans Search
         try:
             
-            max_id, results = search(q=s.q, since_id = s.max_id)
+            max_id, results = search(token_key=s.token_key, token_secret=s.token_secret, q=s.q, since_id = s.max_id)
             
             for r in results:
-                
-                user = self._get_user(r['from_user_id_str'], r['from_user_name'], r['from_user'], r['profile_image_url'])
+                user = self._get_user(r['user']['id_str'], r['user']['name'], r['user']['screen_name'], r['user']['profile_image_url'])
                 
                 try:
                     
@@ -81,7 +78,7 @@ class Command(BaseCommand):
                           )
                
                 tweet.message = r['text'].strip()
-                tweet.language = r['iso_language_code']
+                tweet.language = r['lang']
                 tweet.date = datetime(*rfc822.parsedate(r['created_at'])[:6])
                 tweet.data = simplejson.dumps(r)
                 
