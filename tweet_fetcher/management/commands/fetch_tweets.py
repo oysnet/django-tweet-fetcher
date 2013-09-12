@@ -78,7 +78,9 @@ class Command(BaseCommand):
                           )
                
                 tweet.message = r['text'].strip()
-                tweet.language = r['lang']
+
+                if len(r['metadata']['iso_language_code']) == 2:
+                    tweet.language = r['metadata']['iso_language_code']
                 tweet.date = datetime(*rfc822.parsedate(r['created_at'])[:6])
                 tweet.data = simplejson.dumps(r)
                 
