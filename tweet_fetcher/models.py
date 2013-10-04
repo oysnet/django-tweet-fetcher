@@ -20,7 +20,6 @@ class User(models.Model):
     twitter_id = models.BigIntegerField(unique=True, db_index=True)
     image = models.FileField(upload_to="twitter/%Y/%m", null=True)
     image_url = models.URLField(max_length=1024, null=True)
-    personal_url = models.URLField( max_length=1024, null=True)
     name = models.CharField(max_length=255)
     screen_name = models.CharField(max_length=255)
     language = models.CharField(max_length=2, null=True)
@@ -29,6 +28,10 @@ class User(models.Model):
 
     def __unicode__(self):
         return u"%s - %s (%s)" % (self.pk, self.name, self.twitter_id)
+
+    @property
+    def personal_url(self):
+        return "https://twitter.com/%s" % self.screen_name
 
     def set_image(self, url):
 
